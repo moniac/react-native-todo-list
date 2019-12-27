@@ -18,7 +18,10 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "We need this to verify the owner should see their own data"
+      }
     },
     "android": {
       "package": "com.yourcompany.yourappname"
