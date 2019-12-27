@@ -11,32 +11,38 @@ import {
 
 export default function App() {
   const [todos, setTodos] = useState([]);
+  const [inputText, setInputText] = useState("");
+
+  const hasTodos = todos.length > 0;
+
+  async function fetchTodos() {
+    try {
+      const allItems = await AsyncStorage.getItem("todos");
+      console.log(JSON.parse(allItems), "ALL");
+      setTodos(JSON.parse(allItems));
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   useEffect(() => {
-    async function fetchTodos() {
-      try {
-        const todoss = await AsyncStorage.getItem("todos");
-        console.log(todoss, "wep");
-        // setTodos((todos = []));
-
-        if (todoss) {
-          setTodos([...todoss, todos]);
-        }
-      } catch (e) {
-        console.log("Error getting Todo Items >", e);
-      }
-    }
-
     fetchTodos();
-    console.log(AsyncStorage);
   }, []);
 
-  async function saveTodo() {
-    try {
-      AsyncStorage.setItem("todos", JSON.stringify(this.state.todos));
-    } catch (e) {
-      console.log("Error while storing Todo Items >", e);
-    }
+  useEffect(() => {
+    setInputText("");
+    saveToDos();
+    // fetchTodos();
+  }, [todos]);
+
+  async function saveToDos() {
+    await AsyncStorage.setItem("todos", JSON.stringify(todos));
+  }
+
+  async function clearAsyncStorage() {
+    console.log("REMOVING");
+    AsyncStorage.clear();
+    setTodos([]);
   }
 
   console.log(todos);
@@ -46,24 +52,34 @@ export default function App() {
         autoCapitalize="sentences"
         placeholder="What needs to be done?"
         blurOnSubmit={false}
+        value={inputText}
+        onChangeText={value => setInputText(value)}
+        onSubmitEditing={e =>
+          setTodos(
+            todos =>
+              (todos =
+                inputText.trim() !== "" ? [...todos, inputText] : [...todos])
+          )
+        }
       />
-      <FlatList
-        style={styles.list}
-        data={[
-          { key: "Devin" },
-          { key: "Dan" },
-          { key: "Dominic" },
-          { key: "Jackson" },
-          { key: "James" },
-          { key: "Joel" },
-          { key: "John" },
-          { key: "Jillian" },
-          { key: "Jimmy" },
-          { key: "Julie" }
-        ]}
-        renderItem={({ item }) => <Text style={styles.item}>{item.key}</Text>}
-      />
-      <Button title={"test"} onPress={e => alert("wow")} />
+      {hasTodos ? (
+        <FlatList
+          style={styles.list}
+          data={todos.map(todo => ({
+            key: todo
+          }))}
+          renderItem={({ item, i }) => (
+            <Text key={`${item.key} - ${i}`} style={styles.item}>
+              {item.key}
+            </Text>
+          )}
+        />
+      ) : (
+        <Text>You are all zen like</Text>
+      )}
+      {todos.length > 0 && (
+        <Button title={"test"} onPress={() => clearAsyncStorage()} />
+      )}
     </View>
   );
 }
