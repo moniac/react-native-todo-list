@@ -5,7 +5,8 @@ import {
   View,
   Button,
   TextInput,
-  AsyncStorage
+  AsyncStorage,
+  FlatList
 } from "react-native";
 
 export default function App() {
@@ -46,6 +47,22 @@ export default function App() {
         placeholder="What needs to be done?"
         blurOnSubmit={false}
       />
+      <FlatList
+        style={styles.list}
+        data={[
+          { key: "Devin" },
+          { key: "Dan" },
+          { key: "Dominic" },
+          { key: "Jackson" },
+          { key: "James" },
+          { key: "Joel" },
+          { key: "John" },
+          { key: "Jillian" },
+          { key: "Jimmy" },
+          { key: "Julie" }
+        ]}
+        renderItem={({ item }) => <Text style={styles.item}>{item.key}</Text>}
+      />
       <Button title={"test"} onPress={e => alert("wow")} />
     </View>
   );
@@ -56,6 +73,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "space-evenly"
+  },
+  list: {
+    maxHeight: 400
   }
 });
