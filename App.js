@@ -1,10 +1,51 @@
-import React from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  AsyncStorage
+} from "react-native";
 
 export default function App() {
+  const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    async function fetchTodos() {
+      try {
+        const todoss = await AsyncStorage.getItem("todos");
+        console.log(todoss, "wep");
+        // setTodos((todos = []));
+
+        if (todoss) {
+          setTodos([...todoss, todos]);
+        }
+      } catch (e) {
+        console.log("Error getting Todo Items >", e);
+      }
+    }
+
+    fetchTodos();
+    console.log(AsyncStorage);
+  }, []);
+
+  async function saveTodo() {
+    try {
+      AsyncStorage.setItem("todos", JSON.stringify(this.state.todos));
+    } catch (e) {
+      console.log("Error while storing Todo Items >", e);
+    }
+  }
+
+  console.log(todos);
   return (
     <View style={styles.container}>
-      <Text>Open up App.jsasd to start working on your app!</Text>
+      <TextInput
+        autoCapitalize="sentences"
+        placeholder="What needs to be done?"
+        blurOnSubmit={false}
+      />
       <Button title={"test"} onPress={e => alert("wow")} />
     </View>
   );
