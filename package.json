@@ -1,5 +1,10 @@
 {
   "main": "node_modules/expo/AppEntry.js",
+  "author": {
+    "name": "Mohammed Mulazada"
+  },
+  "name": "todo",
+  "version": "0.0.1",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -8,7 +13,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "expo": "~36.0.0",
+    "expo": "^36.0.2",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
@@ -17,7 +22,11 @@
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
-    "babel-preset-expo": "~8.0.0"
+    "@expo/electron-adapter": "^0.0.0-alpha.12",
+    "@expo/webpack-config": "^0.10.7",
+    "babel-preset-expo": "~8.0.0",
+    "electron": "^6.0.12",
+    "electron-builder": "^21.2.0"
   },
   "private": true
 }

@@ -19,7 +19,7 @@ export default function App() {
   const [todos, setTodos] = useState([]);
   const [inputText, setInputText] = useState("");
 
-  const hasTodos = todos.length > 0;
+  const hasTodos = todos !== null;
 
   async function fetchTodos() {
     try {
@@ -72,19 +72,19 @@ export default function App() {
       {hasTodos ? (
         <FlatList
           style={styles.list}
-          data={todos.map(todo => ({
-            key: todo
+          data={todos.map((todo, i) => ({
+            title: todo,
+            key: `${todo} - ${i}`
           }))}
           renderItem={({ item, index }) => {
             return (
               <Card
-                key={`${item.key} - ${index}`}
                 style={{
                   ...styles.Card,
                   backgroundColor: index % 2 ? "#f9f9f9" : "#fff"
                 }}
               >
-                <Card.Title title={item.key} />
+                <Card.Title title={item.title} />
                 <Card.Actions>
                   <NativeButton onPress={() => removeFromArray(index)}>
                     Delete
