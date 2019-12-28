@@ -25,7 +25,9 @@ export default function App() {
     try {
       const allItems = await AsyncStorage.getItem("todos");
 
-      setTodos(JSON.parse(allItems));
+      if (allItems) {
+        setTodos(JSON.parse(allItems));
+      }
     } catch (err) {
       console.log(err);
     }
@@ -65,9 +67,7 @@ export default function App() {
                 (todos =
                   inputText.trim().length > 0 && todos !== null
                     ? todos.concat(inputText)
-                    : todos !== null && todos.length
-                    ? [...todos]
-                    : [])
+                    : [...todos])
             )
           }
         />
