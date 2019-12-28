@@ -4,9 +4,10 @@ import {
   Text,
   View,
   Button,
-  TextInput,
   AsyncStorage,
-  FlatList
+  FlatList,
+  TextInput,
+  Keyboard
 } from "react-native";
 import {
   Card,
@@ -19,7 +20,7 @@ export default function App() {
   const [todos, setTodos] = useState([]);
   const [inputText, setInputText] = useState("");
 
-  const hasTodos = todos !== null;
+  const hasTodos = todos && todos.length > 0;
 
   async function fetchTodos() {
     try {
@@ -40,6 +41,7 @@ export default function App() {
   useEffect(() => {
     setInputText("");
     saveToDos();
+    Keyboard.dismiss();
   }, [todos]);
 
   async function saveToDos() {
@@ -56,7 +58,7 @@ export default function App() {
       <View style={styles.header}>
         <TextInput
           autoCapitalize="sentences"
-          placeholder="What needs to be done?"
+          placeholder="What to do?"
           blurOnSubmit={false}
           value={inputText}
           style={styles.input}
@@ -114,11 +116,6 @@ export default function App() {
     const values = todos;
     values.splice(index, 1);
 
-    // if (values.length === 0) {
-    //   setTodos([]);
-    //   return;
-    // }
-
     setTodos([...values]);
   }
 }
@@ -139,7 +136,10 @@ const styles = StyleSheet.create({
   },
   header: {
     position: "absolute",
-    top: 0
+    top: 0,
+    width: "100%",
+    marginLeft: "auto",
+    marginRight: "auto"
   },
   clear: {
     marginBottom: 40,
@@ -149,6 +149,12 @@ const styles = StyleSheet.create({
     // marginTop: 8
   },
   input: {
-    width: "100%"
+    width: "100%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    padding: 4,
+    minHeight: 40,
+    paddingLeft: 16,
+    paddingRight: 16
   }
 });
