@@ -16,7 +16,7 @@ import {
 } from "react-native-paper";
 
 export default function App() {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(["example"]);
   const [inputText, setInputText] = useState("");
 
   const hasTodos = todos !== null;
@@ -63,7 +63,9 @@ export default function App() {
             setTodos(
               todos =>
                 (todos =
-                  inputText.trim() !== "" ? [...todos, inputText] : [...todos])
+                  inputText.trim().length > 0 && todos !== null
+                    ? [inputText, ...todos]
+                    : [...todos])
             )
           }
         />
@@ -109,6 +111,11 @@ export default function App() {
   function removeFromArray(index) {
     const values = todos;
     values.splice(index, 1);
+
+    // if (values.length === 0) {
+    //   setTodos([]);
+    //   return;
+    // }
 
     setTodos([...values]);
   }
