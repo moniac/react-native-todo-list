@@ -48,20 +48,22 @@ export default function App() {
   console.log(todos);
   return (
     <View style={styles.container}>
-      <TextInput
-        autoCapitalize="sentences"
-        placeholder="What needs to be done?"
-        blurOnSubmit={false}
-        value={inputText}
-        onChangeText={value => setInputText(value)}
-        onSubmitEditing={e =>
-          setTodos(
-            todos =>
-              (todos =
-                inputText.trim() !== "" ? [...todos, inputText] : [...todos])
-          )
-        }
-      />
+      <View style={styles.header}>
+        <TextInput
+          autoCapitalize="sentences"
+          placeholder="What needs to be done?"
+          blurOnSubmit={false}
+          value={inputText}
+          onChangeText={value => setInputText(value)}
+          onSubmitEditing={e =>
+            setTodos(
+              todos =>
+                (todos =
+                  inputText.trim() !== "" ? [...todos, inputText] : [...todos])
+            )
+          }
+        />
+      </View>
       {hasTodos ? (
         <FlatList
           style={styles.list}
@@ -77,8 +79,12 @@ export default function App() {
       ) : (
         <Text>You are all zen like</Text>
       )}
-      {todos.length > 0 && (
-        <Button title={"test"} onPress={() => clearAsyncStorage()} />
+      {hasTodos && (
+        <Button
+          style={styles.clear}
+          title={"test"}
+          onPress={() => clearAsyncStorage()}
+        />
       )}
     </View>
   );
@@ -89,9 +95,20 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "space-evenly"
+    justifyContent: "space-evenly",
+    marginTop: 80,
+    marginBottom: 40
   },
   list: {
-    maxHeight: 400
+    marginTop: 50,
+    height: "100%"
+  },
+  header: {
+    position: "absolute",
+    top: 0
+  },
+  clear: {
+    marginBottom: 40,
+    paddingBottom: 400
   }
 });
