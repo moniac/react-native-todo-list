@@ -16,7 +16,7 @@ import {
 } from "react-native-paper";
 
 export default function App() {
-  const [todos, setTodos] = useState(["example"]);
+  const [todos, setTodos] = useState([]);
   const [inputText, setInputText] = useState("");
 
   const hasTodos = todos !== null;
@@ -64,8 +64,10 @@ export default function App() {
               todos =>
                 (todos =
                   inputText.trim().length > 0 && todos !== null
-                    ? [inputText, ...todos]
-                    : [...todos])
+                    ? todos.concat(inputText)
+                    : todos !== null && todos.length
+                    ? [...todos]
+                    : [])
             )
           }
         />
@@ -96,7 +98,7 @@ export default function App() {
           }}
         />
       ) : (
-        <Text>You are all zen like</Text>
+        <Text>Nothing. You have reached peace.</Text>
       )}
       {hasTodos && (
         <Button
