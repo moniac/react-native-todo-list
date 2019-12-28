@@ -49,7 +49,6 @@ export default function App() {
     setTodos([]);
   }
 
-  console.log(todos);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
