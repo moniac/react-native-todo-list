@@ -8,6 +8,12 @@ import {
   AsyncStorage,
   FlatList
 } from "react-native";
+import {
+  Card,
+  Title,
+  Paragraph,
+  Button as NativeButton
+} from "react-native-paper";
 
 export default function App() {
   const [todos, setTodos] = useState([]);
@@ -18,7 +24,7 @@ export default function App() {
   async function fetchTodos() {
     try {
       const allItems = await AsyncStorage.getItem("todos");
-      console.log(JSON.parse(allItems), "ALL");
+
       setTodos(JSON.parse(allItems));
     } catch (err) {
       console.log(err);
@@ -32,7 +38,6 @@ export default function App() {
   useEffect(() => {
     setInputText("");
     saveToDos();
-    // fetchTodos();
   }, [todos]);
 
   async function saveToDos() {
@@ -40,7 +45,6 @@ export default function App() {
   }
 
   async function clearAsyncStorage() {
-    console.log("REMOVING");
     AsyncStorage.clear();
     setTodos([]);
   }
@@ -54,6 +58,7 @@ export default function App() {
           placeholder="What needs to be done?"
           blurOnSubmit={false}
           value={inputText}
+          style={styles.input}
           onChangeText={value => setInputText(value)}
           onSubmitEditing={e =>
             setTodos(
@@ -70,11 +75,24 @@ export default function App() {
           data={todos.map(todo => ({
             key: todo
           }))}
-          renderItem={({ item, i }) => (
-            <Text key={`${item.key} - ${i}`} style={styles.item}>
-              {item.key}
-            </Text>
-          )}
+          renderItem={({ item, index }) => {
+            return (
+              <Card
+                key={`${item.key} - ${index}`}
+                style={{
+                  ...styles.Card,
+                  backgroundColor: index % 2 ? "#f9f9f9" : "#fff"
+                }}
+              >
+                <Card.Title title={item.key} />
+                <Card.Actions>
+                  <NativeButton onPress={() => removeFromArray(index)}>
+                    Delete
+                  </NativeButton>
+                </Card.Actions>
+              </Card>
+            );
+          }}
         />
       ) : (
         <Text>You are all zen like</Text>
@@ -82,12 +100,19 @@ export default function App() {
       {hasTodos && (
         <Button
           style={styles.clear}
-          title={"test"}
+          title={"Clear"}
           onPress={() => clearAsyncStorage()}
         />
       )}
     </View>
   );
+
+  function removeFromArray(index) {
+    const values = todos;
+    values.splice(index, 1);
+
+    setTodos([...values]);
+  }
 }
 
 const styles = StyleSheet.create({
@@ -101,7 +126,8 @@ const styles = StyleSheet.create({
   },
   list: {
     marginTop: 50,
-    height: "100%"
+    height: "100%",
+    width: "100%"
   },
   header: {
     position: "absolute",
@@ -110,5 +136,11 @@ const styles = StyleSheet.create({
   clear: {
     marginBottom: 40,
     paddingBottom: 400
+  },
+  Card: {
+    // marginTop: 8
+  },
+  input: {
+    width: "100%"
   }
 });
