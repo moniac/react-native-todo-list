@@ -24,7 +24,8 @@
       }
     },
     "android": {
-      "package": "com.yourcompany.yourappname"
+      "package": "com.mohammedmulazada.honesttodo",
+      "permissions": []
     },
     "description": ""
   }
