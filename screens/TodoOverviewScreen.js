@@ -11,11 +11,27 @@ import {
 } from "react-native";
 import { Card, Button as NativeButton } from "react-native-paper";
 
+const ZeroInboxMessages = [
+  "Nothing. You have achieved peace.",
+  "You are very zen like."
+];
+
+function getRandomZeroInboxMessage() {
+  return (
+    <Text>
+      {ZeroInboxMessages[Math.floor(Math.random() * ZeroInboxMessages.length)]}
+    </Text>
+  );
+}
+
+const ZeroInboxMessage = getRandomZeroInboxMessage();
+
 export default function TodoOverviewScreen() {
   const [todos, setTodos] = useState([]);
   const [inputText, setInputText] = useState("");
 
-  const hasTodos = todos && todos.length > 0;
+  const hasTodos =
+    todos && todos.filter(todo => todo.completed === false).length > 0;
 
   async function fetchTodos() {
     try {
@@ -115,7 +131,7 @@ export default function TodoOverviewScreen() {
           }}
         />
       ) : (
-        <Text>Nothing. You have reached peace.</Text>
+        ZeroInboxMessage
       )}
       {hasTodos && (
         <Button
