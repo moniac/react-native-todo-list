@@ -6,7 +6,16 @@ import { createMaterialTopTabNavigator } from "react-navigation-tabs";
 const TabNavigator = createMaterialTopTabNavigator(
   {
     Home: {
-      screen: TodoOverviewScreen
+      screen: TodoOverviewScreen,
+      navigationOptions: {
+        tabBarOnPress: ({ navigation, defaultHandler }) => {
+          // perform your logic here
+          // this is mandatory to perform the actual switch
+          // don't call this if you want to prevent focus
+          console.log("HOME");
+          defaultHandler();
+        }
+      }
     },
     Completed: {
       screen: CompletedTodosOverviewScreen
