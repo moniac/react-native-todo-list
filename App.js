@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "space-evenly",
-    marginTop: 80,
+    marginTop: 60,
     marginBottom: 40
   },
   list: {
@@ -155,6 +155,8 @@ const styles = StyleSheet.create({
     padding: 4,
     minHeight: 40,
     paddingLeft: 16,
-    paddingRight: 16
+    paddingRight: 16,
+    borderBottomColor: "#f1f1f1",
+    borderBottomWidth: 1
   }
 });
