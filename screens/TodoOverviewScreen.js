@@ -53,6 +53,10 @@ export default function TodoOverviewScreen() {
     const allTodos = todos;
     const markedTodo = allTodos.find(i => i.id === id);
 
+    if (!markedTodo) {
+      return;
+    }
+
     if (markedTodo) {
       markedTodo.completed = true;
     }
