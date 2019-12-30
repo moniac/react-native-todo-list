@@ -6,7 +6,6 @@ import { ZeroInboxMessage } from "./TodoOverviewScreen";
 
 export default function CompletedTodosOverviewScreen() {
   const [todos, setTodos] = useState([]);
-  console.log(todos);
 
   async function fetchTodos() {
     try {
@@ -17,7 +16,7 @@ export default function CompletedTodosOverviewScreen() {
         const filteredItems = parsedItems.filter(
           todo => todo.completed === true
         );
-        console.log(parsedItems, "from complete");
+
         setTodos(filteredItems);
       }
     } catch (err) {
@@ -33,7 +32,7 @@ export default function CompletedTodosOverviewScreen() {
     const allItems = await AsyncStorage.getItem("todos");
     const parsedItems = await JSON.parse(allItems);
     const ted = parsedItems.filter(t => t.id !== id);
-    console.log(ted, "HEREEE");
+
     await AsyncStorage.setItem("todos", JSON.stringify(ted));
     fetchTodos();
   }

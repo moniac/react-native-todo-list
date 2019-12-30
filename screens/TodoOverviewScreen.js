@@ -37,7 +37,7 @@ export default function TodoOverviewScreen() {
 
       if (allItems) {
         const parsedItems = await JSON.parse(allItems);
-        console.log(parsedItems, "PARSED");
+
         setTodos(parsedItems);
       }
     } catch (err) {
@@ -59,7 +59,6 @@ export default function TodoOverviewScreen() {
   }, [todos]);
 
   async function saveToDos() {
-    console.log("saved", todos);
     if (todos.length) {
       await AsyncStorage.setItem("todos", JSON.stringify(todos));
     }
@@ -88,7 +87,7 @@ export default function TodoOverviewScreen() {
   function removeFromArray(id) {
     const filteredTodos = todos.filter(todo => todo.id !== id);
 
-    setTodos([...filteredTodos]);
+    setTodos(filteredTodos);
   }
 
   return (
@@ -159,13 +158,14 @@ export default function TodoOverviewScreen() {
         todos =>
           (todos =
             inputText.trim().length > 0 && todos !== null
-              ? todos.concat([
+              ? [
                   {
                     name: inputText,
                     completed: false,
-                    id: todos.length ? todos[todos.length - 1].id + 1 : 1
-                  }
-                ])
+                    id: todos.length ? todos[0].id + 1 : 1
+                  },
+                  ...todos
+                ]
               : [...todos])
       );
   }
