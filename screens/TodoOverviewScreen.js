@@ -7,14 +7,18 @@ import {
   AsyncStorage,
   FlatList,
   TextInput,
-  Keyboard
+  Keyboard,
+  Alert
 } from "react-native";
 import { Card, Button as NativeButton } from "react-native-paper";
 import { NavigationEvents } from "react-navigation";
 
 const ZeroInboxMessages = [
   "Nothing. You have achieved peace.",
-  "You are very zen like."
+  "You are very zen like.",
+  "Everything can be broken up into small steps.",
+  "It's okay if things take a little longer.",
+  "What will be your next challenge?"
 ];
 
 function getRandomZeroInboxMessage() {
@@ -26,6 +30,8 @@ function getRandomZeroInboxMessage() {
 }
 
 export const ZeroInboxMessage = getRandomZeroInboxMessage();
+
+alert;
 
 export default function TodoOverviewScreen() {
   const [todos, setTodos] = useState([]);
@@ -142,7 +148,17 @@ export default function TodoOverviewScreen() {
         <Button
           style={styles.clear}
           title={"Clear"}
-          onPress={() => clearAsyncStorage()}
+          onPress={() =>
+            Alert.alert(
+              "Confirm",
+              "Are you sure you would like to delete all your to do's?",
+              [
+                { text: "No", onPress: () => console.log("Pressed cancel") },
+                { text: "Yes", onPress: () => clearAsyncStorage() }
+              ],
+              { cancelable: true }
+            )
+          }
         />
       )}
     </View>

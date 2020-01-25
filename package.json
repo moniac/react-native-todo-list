@@ -33,5 +33,28 @@
     "electron": "^6.0.12",
     "electron-builder": "^21.2.0"
   },
-  "private": true
+  "private": true,
+  "build": {
+    "extraMetadata": {
+      "main": "main.js"
+    },
+    "files": [
+      {
+        "from": "dist/main/",
+        "to": "./",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "dist/renderer",
+        "to": "./",
+        "filter": [
+          "**/*"
+        ]
+      },
+      "package.json",
+      "**/node_modules/**/*"
+    ]
+  }
 }
