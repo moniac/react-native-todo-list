@@ -31,7 +31,7 @@
     "@expo/webpack-config": "^0.10.11",
     "babel-preset-expo": "~8.0.0",
     "electron": "^6.0.12",
-    "electron-builder": "^22.2.0"
+    "electron-builder": "^22.6.0"
   },
   "private": true,
   "build": {
