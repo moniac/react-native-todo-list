@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",
-    "@expo/electron-adapter": "^0.0.0-alpha.12",
+    "@expo/electron-adapter": "^0.0.0-alpha.57",
     "@expo/webpack-config": "^0.10.11",
     "babel-preset-expo": "~8.0.0",
     "electron": "^6.0.12",
